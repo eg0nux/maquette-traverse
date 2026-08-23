@@ -145,10 +145,45 @@
     gap: 1.75rem;
   }
   .titre-corps > div { flex: 1 1 auto; min-width: 0; }
-  .titre-logo {
+  /* le dessin se pose sur la dernière ligne du chapeau : la marge basse du
+     paragraphe est reprise ici pour que les deux pieds coïncident */
+  .manufacture {
+    position: relative;
     flex: 0 0 auto;
+    align-self: flex-end;
+    margin-bottom: 1.3rem;
     width: clamp(8rem, 23%, 13rem);
+  }
+  .titre-logo { display: block; width: 100%; height: auto; }
+
+  /* panache de fumée : la cheminée débouche à 22,2 % de la largeur du dessin */
+  .panache {
+    position: absolute;
+    left: 22.2%;
+    bottom: 100%;
+    width: 32%;
     height: auto;
+    transform: translateX(-50%);
+    pointer-events: none;
+    overflow: visible;
+  }
+  .panache .bouffee {
+    fill: var(--papier);
+    stroke: var(--noir);
+    stroke-width: 1.9;
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+  }
+  .manufacture:hover .bouffee { animation: fumee 2.6s ease-out infinite; }
+  .b1 { --derive: -7px; }
+  .b2 { --derive:  6px; animation-delay: .85s; animation-duration: 2.9s; }
+  .b3 { --derive: -13px; animation-delay: 1.7s; animation-duration: 2.4s; }
+  @keyframes fumee {
+    0%   { transform: translate(0, 0) scale(.3); opacity: 0; }
+    12%  { opacity: .95; }
+    65%  { opacity: .75; }
+    100% { transform: translate(var(--derive, 0), -78px) scale(1.35, 1.05); opacity: 0; }
   }
 
   /* ---------- héro ---------- */
@@ -317,6 +352,24 @@
     color: var(--creme);
   }
   .moyens p { margin: 0; }
+  .moyens ul { list-style: none; margin: 0; padding: 0; }
+  .moyens li {
+    position: relative;
+    padding-left: 1.15rem;
+    line-height: 1.5;
+  }
+  .moyens li + li { margin-top: .35rem; }
+  /* puce : petit carré arrondi, écho des cadres de la page */
+  .moyens li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .55em;
+    width: .45rem;
+    height: .45rem;
+    border-radius: 1.5px;
+    background: var(--noir);
+  }
   @media (max-width: 40rem) {
     .moyens { grid-template-columns: 1fr; }
     .moyens > div + div {
@@ -500,7 +553,7 @@
     :root { --trait: 2.5px; }
     .titre { padding: 1.4rem; }
     .titre-corps { display: block; }
-    .titre-logo { width: 9.5rem; margin: 0 auto 1.2rem; }
+    .manufacture { width: 9.5rem; margin: 0 auto 1.2rem; align-self: auto; }
     .cadre-ombre { box-shadow: 5px 5px 0 var(--noir); }
   }
 
@@ -531,7 +584,14 @@
         <h1>La Manufacture<br>des tabacs de Bergerac</h1>
         <p class="chapeau">Reconstitution de l'ancienne manufacture telle qu'elle existait vers 1950-1960, conçue par <strong>Jean-Michel Lorinquer</strong> d'après des photographies d'époque et des mesures relevées sur place. Près de 350 heures de travail au FabLab de l'Atelier Partagé.</p>
       </div>
-      <img class="titre-logo" src="img/logo-manufacture.png" alt="Dessin au trait, en perspective isométrique, d'un corps de bâtiment de la Manufacture avec sa cheminée." width="480" height="370">
+      <span class="manufacture">
+        <svg class="panache" viewBox="0 0 60 96" aria-hidden="true" focusable="false">
+          <ellipse class="bouffee b1" cx="30" cy="93" rx="6.5" ry="5.5"/>
+          <ellipse class="bouffee b2" cx="30" cy="93" rx="5.5" ry="4.8"/>
+          <ellipse class="bouffee b3" cx="30" cy="93" rx="7"   ry="5.8"/>
+        </svg>
+        <img class="titre-logo" src="img/logo-manufacture.png" alt="Dessin au trait, en perspective isométrique, d'un corps de bâtiment de la Manufacture avec sa cheminée." width="480" height="370">
+      </span>
     </div>
     <p class="expo">Première exposition : Fête du matrimoine, à La Traverse, le 19 septembre 2026.</p>
   </div>
@@ -583,11 +643,19 @@
     <div class="moyens">
       <div>
         <span class="etiquette">Matériaux</span>
-        <p>MDF, tasseaux de sapin, carton ondulé, PLA.</p>
+        <ul>
+          <li>MDF</li>
+          <li>Tasseaux de sapin</li>
+          <li>Carton ondulé</li>
+          <li>PLA</li>
+        </ul>
       </div>
       <div>
         <span class="etiquette">Machines</span>
-        <p>Graveuses-découpeuses laser et imprimantes 3D du FabLab.</p>
+        <ul>
+          <li>Graveuses-découpeuses laser</li>
+          <li>Imprimantes 3D</li>
+        </ul>
       </div>
     </div>
   </section>
