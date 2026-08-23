@@ -235,6 +235,41 @@
   }
   ol.etapes p { font-size: .95rem; margin: 0; }
 
+  /* ---------- moyens (matériaux et machines) ---------- */
+  .moyens {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: var(--trait) solid var(--noir);
+    border-radius: var(--rayon);
+    background: var(--papier);
+    overflow: hidden;
+  }
+  .moyens > div { padding: 1.3rem 1.4rem; }
+  .moyens > div + div { border-left: var(--trait) solid var(--noir); }
+  .moyens .etiquette {
+    font-family: var(--mono);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    display: inline-block;
+    padding: .3rem .9rem;
+    margin: 0 0 .7rem;
+    border: 2px solid var(--noir);
+    border-radius: 999px;
+    background: var(--jaune);
+  }
+  .moyens > div + div .etiquette { background: var(--peche); }
+  .moyens p { margin: 0; }
+  @media (max-width: 40rem) {
+    .moyens { grid-template-columns: 1fr; }
+    .moyens > div + div {
+      border-left: 0;
+      border-top: var(--trait) solid var(--noir);
+    }
+  }
+
   /* ---------- galerie ---------- */
   .galerie {
     display: grid;
@@ -475,7 +510,16 @@
       <li><div><h3>Gouttières et peinture</h3><p>Pose des descentes, puis mise en teinte des toitures — d'un rouge vif au départ, patiné ensuite vers le bordeaux.</p></div></li>
       <li><div><h3>Le train Gaston Moyse</h3><p>Conception du locotracteur gris et de ses deux wagons ouverts en bois de type Decauville, pour l'exportation du tabac par l'EPI de la SNCF.</p></div></li>
     </ol>
-    <p style="margin-top:1.25rem">Matériaux : MDF, tasseaux de sapin, carton ondulé, PLA. Machines : graveuses-découpeuses laser et imprimantes 3D du FabLab.</p>
+    <div class="moyens">
+      <div>
+        <span class="etiquette">Matériaux</span>
+        <p>MDF, tasseaux de sapin, carton ondulé, PLA.</p>
+      </div>
+      <div>
+        <span class="etiquette">Machines</span>
+        <p>Graveuses-découpeuses laser et imprimantes 3D du FabLab.</p>
+      </div>
+    </div>
   </section>
 
   <section id="ensemble">
