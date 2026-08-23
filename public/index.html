@@ -290,11 +290,14 @@
     grid-template-columns: 1fr 1fr;
     border: var(--trait) solid var(--noir);
     border-radius: var(--rayon);
-    background: var(--papier);
     overflow: hidden;
   }
   .moyens > div { padding: 1.3rem 1.4rem; }
-  .moyens > div + div { border-left: var(--trait) solid var(--noir); }
+  .moyens > div:first-child { background: var(--jaune); }
+  .moyens > div + div {
+    background: var(--peche);
+    border-left: var(--trait) solid var(--noir);
+  }
   .moyens .etiquette {
     font-family: var(--mono);
     font-size: .78rem;
@@ -306,9 +309,9 @@
     margin: 0 0 .7rem;
     border: 2px solid var(--noir);
     border-radius: 999px;
-    background: var(--jaune);
+    background: var(--noir);
+    color: var(--creme);
   }
-  .moyens > div + div .etiquette { background: var(--peche); }
   .moyens p { margin: 0; }
   @media (max-width: 40rem) {
     .moyens { grid-template-columns: 1fr; }
