@@ -254,6 +254,10 @@
   p:last-child { margin-bottom: 0; }
 
   .texte-cadre { padding: 1.5rem; }
+  /* gras de repérage dans le texte courant : 600, pas le 800 des crédits */
+  .chapeau strong,
+  .texte-cadre strong,
+  ol.etapes strong { font-weight: 600; }
 
   /* ---------- étapes ---------- */
   ol.etapes { list-style: none; counter-reset: e; padding: 0; margin: 0; display: grid; gap: 1rem; }
@@ -525,7 +529,7 @@
     <div class="titre-corps">
       <div>
         <h1>La Manufacture<br>des tabacs de Bergerac</h1>
-        <p class="chapeau">Reconstitution de l'ancienne manufacture telle qu'elle existait vers 1950-1960, conçue par Jean-Michel Lorinquer d'après des photographies d'époque et des mesures relevées sur place. Près de 350 heures de travail au FabLab de l'Atelier Partagé.</p>
+        <p class="chapeau">Reconstitution de l'ancienne manufacture telle qu'elle existait vers 1950-1960, conçue par <strong>Jean-Michel Lorinquer</strong> d'après des photographies d'époque et des mesures relevées sur place. Près de 350 heures de travail au FabLab de l'Atelier Partagé.</p>
       </div>
       <img class="titre-logo" src="img/logo-manufacture.png" alt="Dessin au trait, en perspective isométrique, d'un corps de bâtiment de la Manufacture avec sa cheminée." width="480" height="370">
     </div>
@@ -562,8 +566,8 @@
   <section id="sujet">
     <h2>Le sujet</h2>
     <div class="texte-cadre cadre">
-      <p>La maquette restitue l'ensemble du site industriel : les longs corps de bâtiment aux façades crème percées de fenêtres en plein cintre, les toitures de tuiles bordeaux, la cour centrale, le château d'eau, le pavillon de direction et sa haie, et la vaste halle couverte de verrières qui ferme le site au sud.</p>
-      <p>La vie du site y est figurée : une camionnette jaune dans la cour et le locotracteur gris <a href="https://fr.wikipedia.org/wiki/Locotracteurs_Gaston_Moyse" target="_blank" rel="noopener">Gaston Moyse</a> avec ses deux wagons ouverts en bois de type <a href="https://fr.wikipedia.org/wiki/Decauville" target="_blank" rel="noopener">Decauville</a>, destinés à l'exportation du tabac par l'embranchement particulier de la SNCF. Un camion benne partait pour sa part de l'entrepôt des produits finis.</p>
+      <p>La maquette restitue <strong>l'ensemble du site industriel</strong> : les longs corps de bâtiment aux façades crème percées de fenêtres en plein cintre, les toitures de tuiles bordeaux, la cour centrale, le château d'eau, le pavillon de direction et sa haie, et la vaste halle couverte de verrières qui ferme le site au sud.</p>
+      <p><strong>La vie du site y est figurée</strong> : une camionnette jaune dans la cour et le locotracteur gris <a href="https://fr.wikipedia.org/wiki/Locotracteurs_Gaston_Moyse" target="_blank" rel="noopener">Gaston Moyse</a> avec ses deux wagons ouverts en bois de type <a href="https://fr.wikipedia.org/wiki/Decauville" target="_blank" rel="noopener">Decauville</a>, destinés à l'exportation du tabac par l'embranchement particulier de la SNCF. Un camion benne partait pour sa part de l'entrepôt des produits finis.</p>
     </div>
   </section>
 
@@ -571,9 +575,9 @@
     <h2>La fabrication</h2>
     <ol class="etapes">
       <li><div><h3>Dessins et plans</h3><p>Relevé des proportions à partir des photographies d'époque, complété par des mesures prises sur place. Tracé sous Carbide Create.</p></div></li>
-      <li><div><h3>Châssis en deux parties</h3><p>Un support en MDF scindé en deux, pour rendre l'ensemble transportable malgré ses 1,87 m de long.</p></div></li>
+      <li><div><h3>Châssis en deux parties</h3><p>Un support en MDF scindé en deux, pour rendre l'ensemble transportable malgré ses <strong>1,87 m de long</strong>.</p></div></li>
       <li><div><h3>Implantation</h3><p>Tracé au sol de la disposition de chaque bâtiment avant montage, pour caler les alignements de la cour.</p></div></li>
-      <li><div><h3>Gouttières et peinture</h3><p>Pose des descentes, puis mise en teinte des toitures — d'un rouge vif au départ, patiné ensuite vers le bordeaux.</p></div></li>
+      <li><div><h3>Gouttières et peinture</h3><p>Pose des descentes, puis mise en teinte des toitures — d'un rouge vif au départ, <strong>patiné ensuite vers le bordeaux</strong>.</p></div></li>
       <li><div><h3>Le train Gaston Moyse</h3><p>Conception du locotracteur gris et de ses deux wagons ouverts en bois de type Decauville, pour l'exportation du tabac par l'EPI de la SNCF.</p></div></li>
     </ol>
     <div class="moyens">
