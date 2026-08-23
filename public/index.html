@@ -64,22 +64,53 @@
     gap: 1.25rem;
     flex-wrap: wrap;
   }
-  header img { width: 104px; height: auto; }
-  header img.logo-ap { width: 97px; }
+  header img {
+    width: 104px;
+    height: auto;
+    transform: rotate(var(--incline, 0deg));
+  }
+  header img.logo-ap { width: 140px; }
   a.logo {
     display: block;
     border-radius: 8px;
     transition: transform .12s ease;
   }
+  /* le logo de l'Atelier Partagé penche et plonge dans le bandeau noir */
+  a.logo-ap-lien {
+    --incline: -5deg;
+    margin-bottom: -34px;
+  }
+  a.logo-ap-lien img { transform-origin: 50% 100%; }
   a.logo:hover,
   a.logo:focus-visible {
     background: none;
     transform: translateY(-2px);
   }
   a.logo:focus-visible { outline: var(--trait) solid var(--noir); outline-offset: 4px; }
+  /* survol : petit décrochage façon glitch */
+  a.logo:hover img,
+  a.logo:focus-visible img {
+    animation: soubresaut .5s steps(1, end) infinite;
+  }
+  @keyframes soubresaut {
+    0%   { transform: rotate(var(--incline, 0deg)) translate(0, 0); filter: none; }
+    14%  { transform: rotate(var(--incline, 0deg)) translate(-2px, 1px);
+           filter: drop-shadow(2px 0 var(--rouge)) drop-shadow(-2px 0 var(--jaune)); }
+    28%  { transform: rotate(var(--incline, 0deg)) translate(2px, -1px);
+           filter: drop-shadow(-2px 0 var(--rouge)); }
+    42%  { transform: rotate(var(--incline, 0deg)) translate(-1px, -1px);
+           filter: drop-shadow(1px 1px var(--jaune)); }
+    56%  { transform: rotate(var(--incline, 0deg)) translate(1px, 1px); filter: none; }
+    70%  { transform: rotate(var(--incline, 0deg)) translate(-1px, 0);
+           filter: drop-shadow(2px 0 var(--rouge)); }
+    84%  { transform: rotate(var(--incline, 0deg)) translate(1px, -1px); filter: none; }
+    100% { transform: rotate(var(--incline, 0deg)) translate(0, 0); filter: none; }
+  }
 
   /* ---------- titre ---------- */
   .titre {
+    position: relative;
+    z-index: 1;
     margin: 0 0 2.5rem;
     padding: 2rem;
     background: var(--peche);
@@ -107,6 +138,17 @@
   .titre p.chapeau {
     font-size: clamp(1rem, 2.2vw, 1.2rem);
     margin: 0 0 1.3rem;
+  }
+  .titre-corps {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.75rem;
+  }
+  .titre-corps > div { flex: 1 1 auto; min-width: 0; }
+  .titre-logo {
+    flex: 0 0 auto;
+    width: clamp(8rem, 23%, 13rem);
+    height: auto;
   }
 
   /* ---------- héro ---------- */
@@ -450,12 +492,16 @@
   @media (max-width: 40rem) {
     :root { --trait: 2.5px; }
     .titre { padding: 1.4rem; }
+    .titre-corps { display: block; }
+    .titre-logo { width: 9.5rem; margin: 0 auto 1.2rem; }
     .cadre-ombre { box-shadow: 5px 5px 0 var(--noir); }
   }
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .galerie button { transition: none; }
+    a.logo:hover img,
+    a.logo:focus-visible img { animation: none; }
   }
 </style>
 </head>
@@ -463,8 +509,8 @@
 <div class="enveloppe">
 
   <header>
-    <a class="logo" href="https://ap.latraverse-bergerac.fr/">
-      <img class="logo-ap" src="img/logo-atelier-partage.png" alt="L'Atelier Partagé — La Traverse, Bergerac" width="97">
+    <a class="logo logo-ap-lien" href="https://ap.latraverse-bergerac.fr/">
+      <img class="logo-ap" src="img/logo-atelier-partage.png" alt="L'Atelier Partagé — La Traverse, Bergerac" width="140">
     </a>
     <a class="logo" href="https://www.latraverse-bergerac.fr">
       <img src="img/logo-traverse.png" alt="La Traverse" width="104">
@@ -473,8 +519,13 @@
 
   <div class="titre cadre cadre-ombre">
     <p class="sur">Maquette · échelle 1/100</p>
-    <h1>La Manufacture<br>des tabacs de Bergerac</h1>
-    <p class="chapeau">Reconstitution de l'usine telle qu'elle se présentait vers 1950-1960, bâtie d'après des photographies d'époque et des mesures relevées sur place. Près de 350 heures de travail au FabLab de l'Atelier Partagé.</p>
+    <div class="titre-corps">
+      <div>
+        <h1>La Manufacture<br>des tabacs de Bergerac</h1>
+        <p class="chapeau">Reconstitution de l'usine telle qu'elle se présentait vers 1950-1960, bâtie d'après des photographies d'époque et des mesures relevées sur place. Près de 350 heures de travail au FabLab de l'Atelier Partagé.</p>
+      </div>
+      <img class="titre-logo" src="img/logo-manufacture.png" alt="Dessin au trait, en perspective isométrique, d'un corps de bâtiment de la Manufacture avec sa cheminée." width="480" height="370">
+    </div>
     <p class="expo">Première exposition : Fête du matrimoine, à La Traverse, le 19 septembre 2026.</p>
   </div>
 
