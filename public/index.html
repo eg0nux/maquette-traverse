@@ -500,18 +500,11 @@
     .cadre-ombre { box-shadow: 5px 5px 0 var(--noir); }
   }
 
+  /* le soubresaut des logos n'est pas coupé ici : il ne part qu'au survol,
+     c'est un mouvement demandé et non subi */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .galerie button { transition: none; }
-    /* pas de soubresaut, mais le décrochage chromatique reste, figé */
-    a.logo { transition: none; }
-    a.logo:hover,
-    a.logo:focus-visible { transform: none; }
-    a.logo:hover img,
-    a.logo:focus-visible img {
-      animation: none;
-      filter: drop-shadow(2px 0 var(--rouge)) drop-shadow(-2px 0 var(--jaune));
-    }
   }
 </style>
 </head>
