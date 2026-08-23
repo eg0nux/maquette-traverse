@@ -500,8 +500,15 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .galerie button { transition: none; }
+    /* pas de soubresaut, mais le décrochage chromatique reste, figé */
+    a.logo { transition: none; }
+    a.logo:hover,
+    a.logo:focus-visible { transform: none; }
     a.logo:hover img,
-    a.logo:focus-visible img { animation: none; }
+    a.logo:focus-visible img {
+      animation: none;
+      filter: drop-shadow(2px 0 var(--rouge)) drop-shadow(-2px 0 var(--jaune));
+    }
   }
 </style>
 </head>
@@ -522,7 +529,7 @@
     <div class="titre-corps">
       <div>
         <h1>La Manufacture<br>des tabacs de Bergerac</h1>
-        <p class="chapeau">Reconstitution de l'usine telle qu'elle se présentait vers 1950-1960, bâtie d'après des photographies d'époque et des mesures relevées sur place. Près de 350 heures de travail au FabLab de l'Atelier Partagé.</p>
+        <p class="chapeau">Reconstitution de l'ancienne manufacture telle qu'elle existait vers 1950-1960, conçue par Jean-Michel Lorinquer d'après des photographies d'époque et des mesures relevées sur place. Près de 350 heures de travail au FabLab de l'Atelier Partagé.</p>
       </div>
       <img class="titre-logo" src="img/logo-manufacture.png" alt="Dessin au trait, en perspective isométrique, d'un corps de bâtiment de la Manufacture avec sa cheminée." width="480" height="370">
     </div>
