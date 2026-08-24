@@ -315,14 +315,9 @@
     text-transform: uppercase;
     color: #5a5a5a;
   }
-  @media (prefers-reduced-motion: reduce) {
-    .plaque:hover .pellicule,
-    .plaque:focus-visible .pellicule,
-    .plaque[aria-pressed="true"] .pellicule,
-    .plaque:hover .pellicule::after,
-    .plaque:focus-visible .pellicule::after,
-    .plaque[aria-pressed="true"] .pellicule::after { animation: none; }
-  }
+  /* l'accroche et le décrochage ne sont pas coupés en mouvement réduit :
+     ils ne partent qu'au survol ou au clic, durent une demi-seconde et ne
+     jouent qu'une fois — un mouvement demandé, pas un mouvement subi */
 
   /* ---------- fiche technique ---------- */
   .fiche {
