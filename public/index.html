@@ -47,7 +47,6 @@
     padding: 0 1.25rem 5rem;
   }
 
-  /* ---------- cadres ---------- */
   .cadre {
     border: var(--trait) solid var(--noir);
     border-radius: var(--rayon);
@@ -55,7 +54,6 @@
   }
   .cadre-ombre { box-shadow: 8px 8px 0 var(--noir); }
 
-  /* ---------- en-tête ---------- */
   header {
     padding: 2.5rem 15px 1.5rem;
     display: flex;
@@ -75,7 +73,7 @@
     border-radius: 8px;
     transition: transform .12s ease;
   }
-  /* le logo de l'Atelier Partagé penche et plonge dans le bandeau noir */
+
   a.logo-ap-lien {
     --incline: -5deg;
     margin-bottom: -34px;
@@ -87,7 +85,7 @@
     transform: translateY(-2px);
   }
   a.logo:focus-visible { outline: var(--trait) solid var(--noir); outline-offset: 4px; }
-  /* survol : petit décrochage façon glitch */
+
   a.logo:hover img,
   a.logo:focus-visible img {
     animation: soubresaut .5s steps(1, end) infinite;
@@ -107,7 +105,6 @@
     100% { transform: rotate(var(--incline, 0deg)) translate(0, 0); filter: none; }
   }
 
-  /* ---------- titre ---------- */
   .titre {
     position: relative;
     z-index: 1;
@@ -145,8 +142,7 @@
     gap: 1.75rem;
   }
   .titre-corps > div { flex: 1 1 auto; min-width: 0; }
-  /* le dessin se pose sur la dernière ligne du chapeau : la marge basse du
-     paragraphe est reprise ici pour que les deux pieds coïncident */
+
   .manufacture {
     position: relative;
     flex: 0 0 auto;
@@ -156,7 +152,6 @@
   }
   .titre-logo { display: block; width: 100%; height: auto; }
 
-  /* panache de fumée : la cheminée débouche à 22,2 % de la largeur du dessin */
   .panache {
     position: absolute;
     left: 22.2%;
@@ -186,7 +181,6 @@
     100% { transform: translate(var(--derive, 0), -78px) scale(1.35, 1.05); opacity: 0; }
   }
 
-  /* ---------- héro ---------- */
   figure { margin: 0; }
   .hero { margin: 0 0 3rem; overflow: hidden; padding: 0; }
   .hero img { width: 100%; }
@@ -197,7 +191,6 @@
     background: var(--papier);
   }
 
-  /* ---------- photos d'époque ---------- */
   .epoque {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
@@ -210,19 +203,15 @@
     background: var(--papier);
     overflow: hidden;
   }
-  /* le liseré hachuré : ce qui reste de la trame d'attente */
+
   .plaque {
     display: block;
     width: 100%;
-    padding: 5px;
+    padding: 0;
     border: 0;
     font: inherit;
     cursor: pointer;
-    background: repeating-linear-gradient(
-      45deg,
-      var(--peche) 0 6px,
-      var(--peche-sombre) 6px 12px
-    );
+    background: none;
   }
   .pellicule {
     display: block;
@@ -246,7 +235,6 @@
   .plaque:focus-visible .couleur,
   .plaque[aria-pressed="true"] .couleur { opacity: 1; }
 
-  /* l'image s'accroche, comme sur un vieux téléviseur */
   .pellicule::after {
     content: "";
     position: absolute;
@@ -315,11 +303,7 @@
     text-transform: uppercase;
     color: #5a5a5a;
   }
-  /* l'accroche et le décrochage ne sont pas coupés en mouvement réduit :
-     ils ne partent qu'au survol ou au clic, durent une demi-seconde et ne
-     jouent qu'une fois — un mouvement demandé, pas un mouvement subi */
 
-  /* ---------- fiche technique ---------- */
   .fiche {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
@@ -351,7 +335,6 @@
   .fiche li:nth-child(3n+1) { background: var(--jaune); }
   .fiche li:nth-child(3n+2) { background: var(--peche); }
 
-  /* ---------- sections ---------- */
   section { margin: 0 0 3.5rem; scroll-margin-top: 1rem; }
   h2 {
     font-size: clamp(1.4rem, 3.2vw, 2rem);
@@ -374,12 +357,11 @@
   p:last-child { margin-bottom: 0; }
 
   .texte-cadre { padding: 1.5rem; }
-  /* gras de repérage dans le texte courant : 600, pas le 800 des crédits */
+
   .chapeau strong,
   .texte-cadre strong,
   ol.etapes strong { font-weight: 600; }
 
-  /* ---------- étapes ---------- */
   ol.etapes { list-style: none; counter-reset: e; padding: 0; margin: 0; display: grid; gap: 1rem; }
   ol.etapes li {
     counter-increment: e;
@@ -407,7 +389,6 @@
   }
   ol.etapes p { font-size: .95rem; margin: 0; }
 
-  /* ---------- moyens (matériaux et machines) ---------- */
   .moyens {
     margin-top: 1.5rem;
     display: grid;
@@ -444,7 +425,7 @@
     line-height: 1.5;
   }
   .moyens li + li { margin-top: .35rem; }
-  /* puce : petit carré arrondi, écho des cadres de la page */
+
   .moyens li::before {
     content: "";
     position: absolute;
@@ -463,7 +444,6 @@
     }
   }
 
-  /* ---------- galerie ---------- */
   .galerie {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
@@ -501,7 +481,6 @@
     border-top: var(--trait) solid var(--noir);
   }
 
-  /* ---------- visionneuse ---------- */
   dialog.visionneuse {
     border: none;
     background: transparent;
@@ -559,7 +538,6 @@
   .visionneuse button.fermer { background: var(--rouge); color: var(--papier); }
   .visionneuse button.fermer:hover { background: #d32f2f; }
 
-  /* ---------- crédits ---------- */
   .credits {
     padding: 1.75rem;
     background: var(--peche);
@@ -581,7 +559,6 @@
   a { color: var(--noir); text-decoration-thickness: 2px; text-underline-offset: 3px; }
   a:hover { background: var(--jaune); }
 
-  /* ---------- contact au survol ---------- */
   .contact {
     position: relative;
     text-decoration: underline dotted;
@@ -642,8 +619,6 @@
     .cadre-ombre { box-shadow: 5px 5px 0 var(--noir); }
   }
 
-  /* le soubresaut des logos n'est pas coupé ici : il ne part qu'au survol,
-     c'est un mouvement demandé et non subi */
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .galerie button { transition: none; }
