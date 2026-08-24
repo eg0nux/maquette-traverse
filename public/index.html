@@ -197,41 +197,131 @@
     background: var(--papier);
   }
 
-  /* ---------- emplacements réservés (photos d'époque) ---------- */
+  /* ---------- photos d'époque ---------- */
   .epoque {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     gap: 1rem;
   }
-  .attente {
+  .epoque figure {
+    margin: 0;
     border: var(--trait) dashed var(--noir);
     border-radius: var(--rayon);
-    background: repeating-linear-gradient(
-      45deg,
-      var(--peche) 0 12px,
-      var(--peche-sombre) 12px 24px
-    );
+    background: var(--papier);
     overflow: hidden;
   }
-  .attente .reserve {
-    aspect-ratio: 4 / 3;
-    display: grid;
-    place-items: center;
+  /* le liseré hachuré : ce qui reste de la trame d'attente */
+  .plaque {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: 0;
+    font: inherit;
+    cursor: pointer;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--peche) 0 6px,
+      var(--peche-sombre) 6px 12px
+    );
   }
-  .attente .reserve span {
+  .pellicule {
+    display: block;
+    position: relative;
+    aspect-ratio: 1.38;
+    overflow: hidden;
+    background: var(--noir);
+  }
+  .pellicule img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .pellicule .couleur {
+    opacity: 0;
+    transition: opacity .45s ease .1s;
+  }
+  .plaque:hover .couleur,
+  .plaque:focus-visible .couleur,
+  .plaque[aria-pressed="true"] .couleur { opacity: 1; }
+
+  /* l'image s'accroche, comme sur un vieux téléviseur */
+  .pellicule::after {
+    content: "";
+    position: absolute;
+    inset: -8px 0;
+    pointer-events: none;
+    opacity: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(33, 33, 33, .40) 0 1px,
+      transparent 1px 3px
+    );
+  }
+  .plaque:hover .pellicule::after,
+  .plaque:focus-visible .pellicule::after,
+  .plaque[aria-pressed="true"] .pellicule::after { animation: accroche .6s steps(3) 1; }
+  .plaque:hover .pellicule,
+  .plaque:focus-visible .pellicule,
+  .plaque[aria-pressed="true"] .pellicule { animation: decroche .5s steps(3) 1; }
+  @keyframes accroche {
+    0%   { opacity: .95; transform: translateY(-9px); }
+    30%  { opacity: .75; transform: translateY(6px); }
+    65%  { opacity: .40; transform: translateY(-3px); }
+    100% { opacity: 0;   transform: translateY(0); }
+  }
+  @keyframes decroche {
+    0%, 100% { transform: translateX(0); }
+    18%      { transform: translateX(-4px); }
+    42%      { transform: translateX(3px); }
+    68%      { transform: translateX(-1px); }
+  }
+
+  .pellicule .indice {
+    position: absolute;
+    z-index: 2;
+    top: .55rem;
+    right: .55rem;
     font-family: var(--mono);
-    font-size: .82rem;
-    letter-spacing: .14em;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .12em;
     text-transform: uppercase;
-    background: var(--papier);
+    background: var(--jaune);
+    color: var(--noir);
     border: 2px solid var(--noir);
     border-radius: 999px;
-    padding: .4rem 1rem;
+    padding: .1rem .6rem;
+    transition: opacity .25s;
   }
-  .attente figcaption {
+  .plaque:hover .indice,
+  .plaque:focus-visible .indice,
+  .plaque[aria-pressed="true"] .indice { opacity: 0; }
+
+  .epoque figcaption {
+    padding: .75rem .95rem .85rem;
     border-top: var(--trait) dashed var(--noir);
-    font-style: italic;
+    font-size: .93rem;
+    line-height: 1.5;
+    text-align: left;
+  }
+  .epoque .source {
+    display: block;
+    margin-top: .3rem;
+    font-family: var(--mono);
+    font-size: .76rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
     color: #5a5a5a;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .plaque:hover .pellicule,
+    .plaque:focus-visible .pellicule,
+    .plaque[aria-pressed="true"] .pellicule,
+    .plaque:hover .pellicule::after,
+    .plaque:focus-visible .pellicule::after,
+    .plaque[aria-pressed="true"] .pellicule::after { animation: none; }
   }
 
   /* ---------- fiche technique ---------- */
@@ -598,14 +688,27 @@
 
   <section id="epoque">
     <h2>La Manufacture d'époque</h2>
+    <p>Deux vues du site en <strong>1959</strong>, à l'époque même que restitue la maquette : on y retrouve la voie d'embranchement, le château d'eau et la cour en U.</p>
     <div class="epoque">
-      <figure class="attente">
-        <div class="reserve"><span>Photo d'époque</span></div>
-        <figcaption>Légende à venir.</figcaption>
+      <figure>
+        <button type="button" class="plaque" aria-pressed="false" aria-label="Afficher le quai de chargement en couleur">
+          <span class="pellicule">
+            <img src="img/epoque-quai-1959@small.jpg" alt="Photographie en noir et blanc : des ouvrières chargent des caisses de tabac depuis un quai couvert vers une rame de wagons de bois, un tracteur de manœuvre en bout de voie." loading="lazy" width="800">
+            <img class="couleur" src="img/epoque-quai-1959-couleur@small.jpg" alt="" aria-hidden="true" loading="lazy" width="800">
+            <span class="indice">couleur</span>
+          </span>
+        </button>
+        <figcaption>Le quai de chargement sous son auvent : les caisses de tabac partent vers les wagons couverts rangés sur la voie d'embranchement, tirés par le tracteur de manœuvre.<span class="source">Archives SEITA, 1959</span></figcaption>
       </figure>
-      <figure class="attente">
-        <div class="reserve"><span>Photo d'époque</span></div>
-        <figcaption>Légende à venir.</figcaption>
+      <figure>
+        <button type="button" class="plaque" aria-pressed="false" aria-label="Afficher la cour intérieure en couleur">
+          <span class="pellicule">
+            <img src="img/epoque-cour-1959@small.jpg" alt="Photographie en noir et blanc : la cour en U de la manufacture, arbres fruitiers dénudés, hangars bas et château d'eau sur pilotis devant les façades à trois étages." loading="lazy" width="800">
+            <img class="couleur" src="img/epoque-cour-1959-couleur@small.jpg" alt="" aria-hidden="true" loading="lazy" width="800">
+            <span class="indice">couleur</span>
+          </span>
+        </button>
+        <figcaption>La cour intérieure et son château d'eau sur pilotis, bordée par les corps de bâtiment ; au centre, les hangars et le verger.<span class="source">Archives SEITA, 1959</span></figcaption>
       </figure>
     </div>
   </section>
@@ -689,7 +792,7 @@
 
   <footer>
     <p>Atelier Partagé de La Traverse — 2 rue Jean Nicot, 24100 Bergerac.<br>
-    Photographies d'époque : à renseigner.<span class="sep">#</span>Photographies maquette + conception site : <a class="contact" href="mailto:dieu@egonux.com" data-adresse="dieu@egonux.com">Florian</a>.</p>
+    Photographies d'époque : Archives SEITA (1959).<span class="sep">#</span>Photographies maquette + conception site : <a class="contact" href="mailto:dieu@egonux.com" data-adresse="dieu@egonux.com">Florian</a>.</p>
   </footer>
 
 </div>
@@ -772,6 +875,12 @@
   }
 
   document.addEventListener("click", function (e) {
+    var plaque = e.target.closest(".plaque");
+    if (plaque) {
+      plaque.setAttribute("aria-pressed",
+        plaque.getAttribute("aria-pressed") === "true" ? "false" : "true");
+      return;
+    }
     var vignette = e.target.closest("[data-galerie] button");
     if (vignette) {
       montrer(parseInt(vignette.dataset.index, 10));
