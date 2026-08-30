@@ -7,8 +7,8 @@ from PIL import Image, ImageOps
 sys.path.insert(0, str(Path(__file__).parent))
 from deskew import redresse
 
-SRC = Path("/home/florian/pCloudDrive/Atelier Partagé/1-AP-Généralités/"
-           "B-Nos Photos et Video/Maquette La Traverse")
+SRC = Path.home() / Path("pCloudDrive/Atelier Partagé/1-AP-Généralités/"
+                         "B-Nos Photos et Video/Maquette La Traverse")
 RACINE = Path(__file__).resolve().parent.parent
 PUB, TEST = RACINE / "public", RACINE / "test"
 IMG = TEST / "img"
