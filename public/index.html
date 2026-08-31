@@ -611,6 +611,35 @@
     color: var(--rouge);
   }
 
+  /* Pastille EcoIndex : le badge d'ecoindex.fr redessiné en CSS — afficher
+     une bonne note ne doit rien coûter en poids ni en requêtes. Le B est
+     assez clair pour que la lettre y passe en encre foncée, comme chez eux. */
+  .ecoindex {
+    display: inline-flex;
+    align-items: center;
+    gap: .4em;
+    text-decoration: none;
+  }
+  .ecoindex:hover { background: none; }
+  .ecoindex-nom {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  .ecoindex:hover .ecoindex-nom { background: var(--jaune); }
+  .ecoindex-note {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.55em;
+    height: 1.55em;
+    border-radius: 50%;
+    background: #34bc6e;
+    color: #052d33;
+    font-weight: 700;
+    line-height: 1;
+  }
+
   @media (max-width: 40rem) {
     :root { --trait: 2.5px; }
     .titre { padding: 1.4rem; }
@@ -762,7 +791,7 @@
 
   <footer>
     <p>Atelier Partagé de La Traverse — 2 rue Jean Nicot, 24100 Bergerac.<br>
-    Photographies d'époque : Archives SEITA (1959).<span class="sep">#</span>Photographies maquette + conception site : <a class="contact" href="mailto:florian@egonux.com" data-adresse="florian@egonux.com">Florian</a>.<span class="sep">#</span><a href="https://www.egonux.com">ego/nux</a></p>
+    Photographies d'époque : Archives SEITA (1959).<span class="sep">#</span>Photographies maquette + conception site : <a class="contact" href="mailto:florian@egonux.com" data-adresse="florian@egonux.com">Florian</a>.<span class="sep">#</span><a class="ecoindex" href="https://www.ecoindex.fr/resultat/?id=4a098de6-acc1-4fcd-b2a4-2301a4ce049e" title="EcoIndex : note B" aria-label="EcoIndex : note B, voir le rapport"><span class="ecoindex-nom">ecoindex</span><span class="ecoindex-note">B</span></a><span class="sep">#</span><a href="https://www.egonux.com">ego/nux</a></p>
   </footer>
 
 </div>
