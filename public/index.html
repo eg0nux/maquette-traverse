@@ -627,6 +627,14 @@
     text-underline-offset: 3px;
   }
   .ecoindex:hover .ecoindex-nom { background: var(--jaune); }
+  /* Ces deux-là sont des marques, pas des mots : en capitales, comme dans le
+     pied de page des autres sites. La casse reste minuscule dans le texte, un
+     lecteur d'écran n'a pas à les épeler. */
+  footer .capitales,
+  footer .ecoindex-nom {
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
   .ecoindex-note {
     display: inline-flex;
     align-items: center;
@@ -791,7 +799,7 @@
 
   <footer>
     <p>Atelier Partagé de La Traverse — 2 rue Jean Nicot, 24100 Bergerac.<br>
-    Photographies d'époque : Archives SEITA (1959).<span class="sep">#</span>Photographies maquette + conception site : <a class="contact" href="mailto:florian@egonux.com" data-adresse="florian@egonux.com">Florian</a>.<span class="sep">#</span><a class="ecoindex" href="https://www.ecoindex.fr/resultat/?id=4a098de6-acc1-4fcd-b2a4-2301a4ce049e" title="EcoIndex : note B" aria-label="EcoIndex : note B, voir le rapport"><span class="ecoindex-nom">ecoindex</span><span class="ecoindex-note">B</span></a><span class="sep">#</span><a href="https://www.egonux.com">ego/nux</a></p>
+    Photographies d'époque : Archives SEITA (1959).<span class="sep">#</span>Photographies maquette + site : <a class="contact" href="mailto:florian@egonux.com" data-adresse="florian@egonux.com">Florian</a>.<span class="sep">#</span><a class="ecoindex" href="https://www.ecoindex.fr/resultat/?id=4a098de6-acc1-4fcd-b2a4-2301a4ce049e" title="EcoIndex : note B" aria-label="EcoIndex : note B, voir le rapport"><span class="ecoindex-nom">ecoindex</span><span class="ecoindex-note">B</span></a><span class="sep">#</span><a class="capitales" href="https://www.egonux.com">ego/nux</a></p>
   </footer>
 
 </div>
