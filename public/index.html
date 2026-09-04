@@ -105,17 +105,6 @@
     100% { transform: rotate(var(--incline, 0deg)) translate(0, 0); filter: none; }
   }
 
-  /* Les deux structures qui portent le FabLab vont ensemble, à droite de
-     l'en-tête : le CIDFF Dordogne, qui anime l'atelier numérique, puis La
-     Traverse, qui l'héberge. Séparées d'une esperluette, pas d'un blanc :
-     l'atelier est une collaboration des deux, pas deux structures qui se
-     trouvent sur la même page. Même rangée que dans la colonne de
-     fablab.egonux.com et de lab.egonux.com. */
-  /* Descendue de 8 px : le logotype de l'Atelier Partagé, penché et débordant
-     sur le cadre, tire l'œil vers le bas à gauche de l'en-tête. Centrée au
-     pixel, la rangée de droite paraissait flotter au-dessus de lui. Le décalage
-     se prend en transformation, pour ne pas rouvrir l'espace de 31 px qui la
-     sépare du cadre noir — il en reste 23. */
   .logos-paire {
     display: flex;
     align-items: center;
@@ -123,95 +112,42 @@
     transform: translateY(8px);
   }
 
-  /* Hauteur commune, largeur libre : c'est la hauteur d'x des deux logotypes
-     qui doit s'accorder, pas leur encombrement. Le pavé du CIDFF est le plus
-     large ; caler la rangée sur la largeur, comme le reste de l'en-tête,
-     l'aurait rendu plus petit que « LA TRAVERSE » qu'il accompagne. */
   .logos-paire img {
     width: auto;
     height: 66px;
-    /* Sur un écran étroit, la rangée se serre : les deux liens rétrécissent
-       proportionnellement à leur largeur, et sans `contain` les logotypes
-       s'écrasaient. Cadrés au pied, ils gardent leurs proportions, restent
-       de même hauteur l'un que l'autre — le rapport entre les deux largeurs ne
-       change pas — et leur ligne de mots reste celle de l'esperluette. */
     object-fit: contain;
     object-position: 50% 100%;
   }
 
-  /* Les deux logotypes se posent sur la même ligne de pied. Ils s'y posent
-     vraiment : dans les deux images, l'encre descend jusqu'au dernier rang de
-     pixels — le bord du pavé « Dordogne » comme les fûts de LA TRAVERSE. Il
-     suffit donc d'aligner les boîtes par le bas, ce que le centrage de la
-     rangée ne fait pas dès que les deux hauteurs diffèrent. L'esperluette, elle,
-     garde son calage propre. */
   .logos-paire a.logo { align-self: flex-end; }
 
-  /* Correction d'optique pour le CIDFF, dont le pavé « Dordogne » est un
-     rectangle plein : à hauteur égale, il pèse plus lourd que le lettrage de La
-     Traverse, tout en jambages et en vide. On lui retire un onzième. */
   .logos-paire img[src$="logo-cidff.svg"] { height: 60px; }
 
-  /* Cormorant Garamond, italique, réduite au seul caractère « & » : mille cent
-     quatre octets. La police n'est appelée que pour ce signe, jamais pour du
-     texte — c'est ce qui rend le sous-ensemble acceptable là où une troisième
-     famille complète ne le serait pas. Licence ouverte SIL, dont le texte
-     accompagne le fichier dans le même dossier.
-
-     Pourquoi elle plutôt que Work Sans, déjà là : l'esperluette de Cormorant
-     est une ligature « Et » de tradition Garamond, la boucle qui remonte et la
-     barre qui traverse. Celle d'une linéale est une ponctuation ; ici le signe
-     doit tenir seul entre deux logotypes. */
   @font-face {
     font-family: "Cormorant Garamond";
     font-style: italic;
     font-weight: 400;
     font-display: swap;
     src: url("fonts/cormorant-garamond-400-italic-esperluette.woff2") format("woff2");
-    /* Le sous-ensemble ne contient que l'esperluette. Le dire au navigateur lui
-       évite de charger le fichier là où elle ne s'affiche pas. */
     unicode-range: U+26;
   }
 
-  /* Aligné bas, pas au milieu : les deux logotypes ont leur masse en bas, le
-     cartouche « Dordogne » d'un côté, le mot « LA TRAVERSE » de l'autre,
-     surmonté d'une arche qui n'est que du vide optique. Centré sur la boîte,
-     le signe flottait au-dessus de cette ligne-là.
-
-     Il ne réagit pas au survol : rien à cliquer, et le soubresaut des logos
-     serait brouillé par un troisième élément qui bouge. */
   .logos-et {
     flex: 0 0 auto;
     align-self: flex-end;
     font-family: "Cormorant Garamond", Georgia, serif;
     font-style: italic;
-    /* Cormorant est un caractère de titrage : à corps égal, son œil est plus
-       petit et son trait plus fin que ceux de Work Sans. Il lui faut donc un
-       corps plus grand pour peser autant entre les deux logotypes. */
     font-size: 2.8rem;
     line-height: 1;
     color: var(--noir);
     user-select: none;
-    /* Cormorant pose son esperluette haut dans la boîte de ligne : calée au
-       pied, son encre tombait au-dessus de la ligne des mots. La marge négative
-       la redescend, en em pour qu'elle suive le corps si on y retouche. */
     margin-bottom: -0.11em;
   }
 
-  /* Le logotype du CIDFF est le seul en couleur de l'en-tête ; La Traverse est
-     déjà dessiné en noir. Son turquoise et son orange faisaient une tache
-     isolée, le seul endroit de la page où la couleur ne dit rien : celles de la
-     charte sont ailleurs, réservées aux accents.
-
-     `brightness(0)` aplatit tout sur du noir en gardant la transparence. On
-     cible par le fichier plutôt que par un libellé : le nom de la structure
-     peut changer, le fichier non. */
   header img[src$="logo-cidff.svg"] {
     filter: brightness(0);
   }
 
-  /* Le soubresaut réécrit entièrement le `filter` à chaque étape : sans version
-     noire de l'animation, le logotype retrouverait ses couleurs au survol. */
   a.logo:hover img[src$="logo-cidff.svg"],
   a.logo:focus-visible img[src$="logo-cidff.svg"] {
     animation-name: soubresaut-noir;
@@ -231,11 +167,6 @@
     100% { transform: rotate(var(--incline, 0deg)) translate(0, 0); filter: brightness(0); }
   }
 
-  /* Sous 30 rem, la rangée ne tient plus : la paire passe sous le logotype de
-     l'Atelier Partagé. Celui-ci n'a alors plus de voisin à sa droite, et le
-     débord de 34 px qui le faisait mordre sur le cartouche du titre venait
-     cette fois recouvrir le CIDFF. On le rend à sa ligne, et on écarte les
-     deux rangées. */
   @media (max-width: 30rem) {
     header { row-gap: 1.5rem; }
     a.logo-ap-lien { margin-bottom: 0; }
@@ -320,6 +251,22 @@
   figure { margin: 0; }
   .hero { margin: 0 0 3rem; overflow: hidden; padding: 0; }
   .hero img { width: 100%; }
+  .hero-lien {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .hero-lien img { display: block; transition: transform .3s ease; }
+  .hero-lien:hover img,
+  .hero-lien:focus-visible img { transform: scale(1.02); }
+  .hero-lien:focus-visible { outline: var(--trait) solid var(--noir); outline-offset: -6px; }
   figcaption {
     font-size: .88rem;
     padding: .8rem 1rem;
@@ -402,7 +349,7 @@
     68%      { transform: translateX(-1px); }
   }
 
-  .pellicule .indice {
+  .indice {
     position: absolute;
     z-index: 2;
     top: .55rem;
@@ -692,8 +639,6 @@
     font-weight: 600;
     max-width: 100%;
   }
-  /* Le « f » de Facebook redessiné en SVG inline : un logo de 300 octets qui
-     suit la couleur d'encre, plutôt qu'une image et une requête de plus. */
   .expo .fb {
     display: inline-flex;
     vertical-align: -.2em;
@@ -707,10 +652,6 @@
   a { color: var(--noir); text-decoration-thickness: 2px; text-underline-offset: 3px; }
   a:hover { background: var(--jaune); }
 
-  /* Infobulle maison, préférée à celle du navigateur : elle vient sans le délai
-     d'une seconde, et elle est dessinée comme le reste — trait noir, ombre
-     portée, texte en Inconsolata. Tout ce qui, sur cette page, dit un mot de
-     plus au survol passe par elle. */
   .bulle { position: relative; }
   .bulle::after {
     content: attr(data-bulle);
@@ -721,8 +662,6 @@
     font-family: var(--mono);
     font-size: .82rem;
     font-weight: 400;
-    /* Fixée ici, pas héritée : accrochée à une icône, la pastille reprenait son
-       interligne nul et s'écrasait sur elle-même. */
     line-height: 1.25;
     white-space: nowrap;
     padding: .3rem .7rem;
@@ -741,8 +680,6 @@
     visibility: visible;
     transform: translateY(0);
   }
-  /* Pour ce qui se tient en fin de ligne, la pastille s'aligne par la droite :
-     partie du bord gauche, elle sortirait du cadre. */
   .bulle.a-droite::after { left: auto; right: 0; }
   @media (hover: none) {
     .bulle::after { display: none; }
@@ -751,8 +688,6 @@
     .bulle::after { transition: none; }
   }
 
-  /* Une adresse électronique se donne à lire, elle ne se clique pas forcément :
-     le pointillé annonce qu'il y a autre chose à voir que la destination. */
   .contact {
     text-decoration: underline dotted;
     text-decoration-thickness: 2px;
@@ -771,8 +706,6 @@
     padding: 0 .55rem;
     color: var(--rouge);
   }
-  /* Le tiret qui séparait le lieu de son adresse, redessiné : un signe vaut
-     mieux qu'un mot quand il s'agit de dire « ici ». */
   .lieu {
     width: 1.05em;
     height: 1.05em;
@@ -781,9 +714,6 @@
     margin: 0 .34em 0 .42em;
   }
 
-  /* Pastille EcoIndex : le badge d'ecoindex.fr redessiné en CSS — afficher
-     une bonne note ne doit rien coûter en poids ni en requêtes. Le B est
-     assez clair pour que la lettre y passe en encre foncée, comme chez eux. */
   .ecoindex {
     display: inline-flex;
     align-items: center;
@@ -823,6 +753,7 @@
     html { scroll-behavior: auto; }
     .galerie button { transition: none; }
     .expo .fb svg { transition: none; }
+    .hero-lien img { transition: none; }
   }
 </style>
 </head>
@@ -837,12 +768,6 @@
       <a class="logo" href="https://www.cidff24.fr">
         <img src="img/logo-cidff.svg" alt="CIDFF Dordogne" width="129" height="66">
       </a>
-      <!-- L'esperluette de Cormorant Garamond en italique : une ligature « Et »
-           de tradition Garamond, pas une ponctuation. Elle dit que l'atelier
-           est ce que les deux structures font ensemble.
-
-           Décorative : les deux liens portent déjà leur nom, et un lecteur
-           d'écran n'a pas à annoncer « et commercial ». -->
       <span class="logos-et" aria-hidden="true">&amp;</span>
       <a class="logo" href="https://www.latraverse-bergerac.fr">
         <img src="img/logo-traverse.png" alt="La Traverse" width="103" height="66">
@@ -897,8 +822,11 @@
   </section>
 
   <figure class="hero cadre cadre-ombre">
-    <img src="img/maquette-hero.jpg" alt="Vue plongeante sur la cour : les longues toitures bordeaux de deux corps de bâtiment encadrent une pelouse plantée d'arbres, et le pavillon de direction coiffé de ses cheminées de brique." width="2000">
-    <figcaption>La cour intérieure : les deux ailes encadrent le jardin planté et le pavillon de direction.</figcaption>
+    <button type="button" class="hero-lien" data-index="0" aria-label="Voir la photo entière">
+      <img src="img/maquette-hero.jpg" alt="Vue plongeante sur la cour intérieure : une pelouse plantée d'arbres et le pavillon de direction coiffé de ses cheminées de brique, encadrés par les longues toitures bordeaux des deux ailes." width="2000">
+      <span class="indice">agrandir</span>
+    </button>
+    <figcaption>La cour plantée et le pavillon de direction, entre les deux ailes.</figcaption>
   </figure>
 
   <ul class="fiche">
@@ -1007,7 +935,7 @@
       { f: "IMG_20260818_140840", t: "Les corps de bâtiment en cours d'assemblage." }
     ]},
     { section: "details", images: [
-      { f: "IMG_20260903_165328", t: "La cour plantée, le pavillon de direction et le château d'eau." },
+      { f: "IMG_20260903_165454", t: "Les corps de bâtiment autour du jardin ; à droite, les wagons chargés de caisses." },
       { f: "IMG_20260903_165430", t: "Le jardin : pelouse, arbres et château d'eau au pied de l'aile." },
       { f: "IMG_20260903_165517", t: "À la verticale du jardin, entre les toitures des deux ailes." },
       { f: "IMG_20260903_165544", t: "Le préau de tôle, la camionnette jaune et le camion benne chargé." },
@@ -1024,7 +952,9 @@
     ]}
   ];
 
-  var toutes = [];
+  var toutes = [{ f: "IMG_20260903_165328",
+                  t: "La cour plantée, le pavillon de direction et le château d'eau." }];
+
   groupes.forEach(function (g) {
     var hote = document.querySelector("#" + g.section + " [data-galerie]");
     if (!hote) return;
@@ -1064,7 +994,7 @@
         plaque.getAttribute("aria-pressed") === "true" ? "false" : "true");
       return;
     }
-    var vignette = e.target.closest("[data-galerie] button");
+    var vignette = e.target.closest("[data-index]");
     if (vignette) {
       montrer(parseInt(vignette.dataset.index, 10));
       if (typeof dlg.showModal === "function") dlg.showModal();

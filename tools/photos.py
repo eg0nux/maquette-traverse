@@ -8,6 +8,7 @@ redressée — gauche, haut, droite, bas — pour rester lisibles et rejouables.
     python tools/photos.py            # tout régénérer
     python tools/photos.py 165328     # une seule photo
 """
+import io
 import sys
 from pathlib import Path
 
@@ -33,18 +34,23 @@ PHOTOS = {
     "IMG_20260903_165308": ("IMG_20260903_165308", (0.00, 0.02, 0.97, 0.93)),
     "IMG_20260903_165627": ("IMG_20260903_165627", (0.02, 0.00, 0.98, 0.47)),
     # Détails
-    "IMG_20260903_165328": ("IMG_20260903_165328", (0.03, 0.02, 0.95, 1.00)),
+    "IMG_20260903_165454": ("IMG_20260903_165454", (0.00, 0.105, 0.97, 1.00)),
     "IMG_20260903_165430": ("IMG_20260903_165430", (0.00, 0.00, 1.00, 0.84)),
     "IMG_20260903_165517": ("IMG_20260903_165517", (0.12, 0.00, 0.96, 0.95)),
     "IMG_20260903_165544": ("IMG_20260903_165544", (0.03, 0.00, 1.00, 0.88)),
     "IMG_20260903_165408": ("IMG_20260903_165408", (0.00, 0.12, 1.00, 1.00)),
     "IMG_20260903_165347": ("IMG_20260903_165347", (0.05, 0.00, 0.56, 1.00)),
     "IMG_20260903_165354": ("IMG_20260903_165354", (0.02, 0.10, 0.98, 0.97)),
-    # Bandeau d'ouverture
-    "maquette-hero": ("IMG_20260903_165454", (0.00, 0.10, 1.00, 0.567)),
+    # Bandeau d'ouverture : la bande, puis la photo entière qu'un clic ouvre.
+    # Elle prend le pied du château d'eau et descend jusque dans la cour, devant
+    # le pavillon : la pelouse, la maison et ses arbres y tiennent d'un bout à
+    # l'autre.
+    "maquette-hero": ("IMG_20260903_165328", (0.00, 0.30, 1.00, 0.90)),
+    "IMG_20260903_165328": ("IMG_20260903_165328", (0.03, 0.02, 0.95, 1.00)),
 }
 
-LARGEURS = {"maquette-hero": (2000,)}   # le bandeau n'a pas de version @small
+# Le bandeau n'a pas de vignette ; la photo qu'il ouvre non plus.
+LARGEURS = {"maquette-hero": (2000,), "IMG_20260903_165328": (1600,)}
 DEFAUT = (1600, 800)
 
 
@@ -83,19 +89,54 @@ def sublime(im):
     return im.filter(ImageFilter.UnsharpMask(radius=1.1, percent=50, threshold=3))
 
 
-def qualite(largeur):
-    """Les vignettes s'affichent sous 400 px de côté : 80 y est indiscernable
-    de 86. Le bandeau, lui, se charge d'emblée — il descend à 82 pour ne pas
-    peser sur le premier affichage."""
-    if largeur <= 800:
-        return 80
-    return 82 if largeur >= 2000 else 86
+# Seuil calibré sur ces photos-là, mesuré par la fonction ci-dessous : au-delà,
+# passer à la qualité supérieure ne gagne plus rien que l'œil retrouve, et
+# l'image enfle. Les valeurs ne sont pas comparables à celles d'une autre
+# implémentation de SSIM.
+SSIM_MINIMAL = 0.950
+QUALITES = (70, 72, 74, 76, 78, 80, 82, 84, 86)
+
+
+def ssim(a, b, fenetre=8):
+    """Similarité structurelle, en niveaux de gris, sur des fenêtres carrées.
+    Une image très détaillée — feuillage, gravier — perd sa matière avant qu'un
+    aplat ne bouge : la mesure le voit là où l'écart moyen ne dit rien."""
+    x = np.asarray(a.convert("L"), float)
+    y = np.asarray(b.convert("L"), float)
+    h, w = (s - s % fenetre for s in x.shape)
+    x, y = x[:h, :w], y[:h, :w]
+    forme = (h // fenetre, fenetre, w // fenetre, fenetre)
+    bloc = lambda m: m.reshape(forme).mean(axis=(1, 3))
+    mx, my = bloc(x), bloc(y)
+    vx, vy = bloc(x * x) - mx * mx, bloc(y * y) - my * my
+    vxy = bloc(x * y) - mx * my
+    c1, c2 = (0.01 * 255) ** 2, (0.03 * 255) ** 2
+    carte = ((2 * mx * my + c1) * (2 * vxy + c2)) / ((mx * mx + my * my + c1) * (vx + vy + c2))
+    return float(carte.mean())
+
+
+def qualite_juste(im):
+    """La plus basse qualité JPEG que cette image-là supporte sans qu'on le voie.
+    Un ciel uni descend bas, une pelouse d'arbres découpés beaucoup moins ; un
+    réglage unique aurait donc surpayé les unes et abîmé les autres."""
+    for q in QUALITES:
+        tampon = io.BytesIO()
+        im.save(tampon, "JPEG", quality=q, optimize=True, progressive=True)
+        tampon.seek(0)
+        if ssim(im, Image.open(tampon)) >= SSIM_MINIMAL:
+            return q, tampon.getvalue()
+    return QUALITES[-1], None
 
 
 def enregistre(im, dest, largeur):
     if im.width > largeur:
         im = im.resize((largeur, round(im.height * largeur / im.width)), Image.LANCZOS)
-    im.save(dest, "JPEG", quality=qualite(largeur), optimize=True, progressive=True)
+    q, octets = qualite_juste(im)
+    if octets is None:
+        im.save(dest, "JPEG", quality=q, optimize=True, progressive=True)
+    else:
+        dest.write_bytes(octets)
+    return q
 
 
 def prepare(nom, source, cadre):
@@ -104,10 +145,12 @@ def prepare(nom, source, cadre):
     l, t, r, b = cadre
     im = im.crop((round(l * w), round(t * h), round(r * w), round(b * h)))
     im = sublime(im)
+    qualites = []
     for largeur in LARGEURS.get(nom, DEFAUT):
         suffixe = "" if largeur == max(LARGEURS.get(nom, DEFAUT)) else "@small"
-        enregistre(im.copy(), IMG / f"{nom}{suffixe}.jpg", largeur)
-    print(f"{nom}  {angle:+.2f}°  {im.width}×{im.height}", flush=True)
+        qualites.append(enregistre(im.copy(), IMG / f"{nom}{suffixe}.jpg", largeur))
+    print(f"{nom}  {angle:+.2f}°  {im.width}×{im.height}  q{'/'.join(map(str, qualites))}",
+          flush=True)
 
 
 if __name__ == "__main__":
