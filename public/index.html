@@ -111,10 +111,16 @@
      l'atelier est une collaboration des deux, pas deux structures qui se
      trouvent sur la même page. Même rangée que dans la colonne de
      fablab.egonux.com et de lab.egonux.com. */
+  /* Descendue de 8 px : le logotype de l'Atelier Partagé, penché et débordant
+     sur le cadre, tire l'œil vers le bas à gauche de l'en-tête. Centrée au
+     pixel, la rangée de droite paraissait flotter au-dessus de lui. Le décalage
+     se prend en transformation, pour ne pas rouvrir l'espace de 31 px qui la
+     sépare du cadre noir — il en reste 23. */
   .logos-paire {
     display: flex;
     align-items: center;
     gap: 1.1rem;
+    transform: translateY(8px);
   }
 
   /* Hauteur commune, largeur libre : c'est la hauteur d'x des deux logotypes
@@ -133,24 +139,18 @@
     object-position: 50% 100%;
   }
 
-  /* Deux corrections d'optique pour le CIDFF, dont le pavé « Dordogne » est un
-     rectangle plein : à hauteur de boîte égale, il pesait plus lourd que le
-     lettrage de La Traverse, tout en jambages et en vide. On lui retire un
-     vingtième de sa taille.
+  /* Les deux logotypes se posent sur la même ligne de pied. Ils s'y posent
+     vraiment : dans les deux images, l'encre descend jusqu'au dernier rang de
+     pixels — le bord du pavé « Dordogne » comme les fûts de LA TRAVERSE. Il
+     suffit donc d'aligner les boîtes par le bas, ce que le centrage de la
+     rangée ne fait pas dès que les deux hauteurs diffèrent. L'esperluette, elle,
+     garde son calage propre. */
+  .logos-paire a.logo { align-self: flex-end; }
 
-     Et on le remonte de 3 px. Les deux logotypes sont pourtant calés au pixel
-     sur la même ligne : c'est leur encre qui ne l'est pas. Le bord du pavé
-     descend jusqu'au bas de son image, quand les lettres de La Traverse, tracées
-     sur une ligne de pied irrégulière, s'arrêtent pour moitié 5 px plus haut et
-     ne laissent en dessous que quelques fûts. Le pavé se pose donc à mi-chemin
-     entre ces deux lignes, là où l'œil attend le pied du mot.
-
-     La marge est prise sur l'image, pas sur le lien : la boîte du lien garde ses
-     66 px, la rangée et l'esperluette ne bougent pas. */
-  .logos-paire img[src$="logo-cidff.svg"] {
-    height: 63px;
-    margin-bottom: 3px;
-  }
+  /* Correction d'optique pour le CIDFF, dont le pavé « Dordogne » est un
+     rectangle plein : à hauteur égale, il pèse plus lourd que le lettrage de La
+     Traverse, tout en jambages et en vide. On lui retire un onzième. */
+  .logos-paire img[src$="logo-cidff.svg"] { height: 60px; }
 
   /* Cormorant Garamond, italique, réduite au seul caractère « & » : mille cent
      quatre octets. La police n'est appelée que pour ce signe, jamais pour du
@@ -707,14 +707,13 @@
   a { color: var(--noir); text-decoration-thickness: 2px; text-underline-offset: 3px; }
   a:hover { background: var(--jaune); }
 
-  .contact {
-    position: relative;
-    text-decoration: underline dotted;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-  }
-  .contact::after {
-    content: attr(data-adresse);
+  /* Infobulle maison, préférée à celle du navigateur : elle vient sans le délai
+     d'une seconde, et elle est dessinée comme le reste — trait noir, ombre
+     portée, texte en Inconsolata. Tout ce qui, sur cette page, dit un mot de
+     plus au survol passe par elle. */
+  .bulle { position: relative; }
+  .bulle::after {
+    content: attr(data-bulle);
     position: absolute;
     left: 0;
     bottom: calc(100% + .5rem);
@@ -722,6 +721,9 @@
     font-family: var(--mono);
     font-size: .82rem;
     font-weight: 400;
+    /* Fixée ici, pas héritée : accrochée à une icône, la pastille reprenait son
+       interligne nul et s'écrasait sur elle-même. */
+    line-height: 1.25;
     white-space: nowrap;
     padding: .3rem .7rem;
     background: var(--papier);
@@ -733,17 +735,28 @@
     transform: translateY(3px);
     transition: opacity .12s ease, transform .12s ease;
   }
-  .contact:hover::after,
-  .contact:focus-visible::after {
+  .bulle:hover::after,
+  .bulle:focus-visible::after {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
   }
+  /* Pour ce qui se tient en fin de ligne, la pastille s'aligne par la droite :
+     partie du bord gauche, elle sortirait du cadre. */
+  .bulle.a-droite::after { left: auto; right: 0; }
   @media (hover: none) {
-    .contact::after { display: none; }
+    .bulle::after { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .contact::after { transition: none; }
+    .bulle::after { transition: none; }
+  }
+
+  /* Une adresse électronique se donne à lire, elle ne se clique pas forcément :
+     le pointillé annonce qu'il y a autre chose à voir que la destination. */
+  .contact {
+    text-decoration: underline dotted;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
   }
 
   footer {
@@ -758,6 +771,15 @@
     padding: 0 .55rem;
     color: var(--rouge);
   }
+  /* Le tiret qui séparait le lieu de son adresse, redessiné : un signe vaut
+     mieux qu'un mot quand il s'agit de dire « ici ». */
+  .lieu {
+    width: 1.05em;
+    height: 1.05em;
+    fill: var(--noir);
+    vertical-align: -.17em;
+    margin: 0 .34em 0 .42em;
+  }
 
   /* Pastille EcoIndex : le badge d'ecoindex.fr redessiné en CSS — afficher
      une bonne note ne doit rien coûter en poids ni en requêtes. Le B est
@@ -769,21 +791,13 @@
     text-decoration: none;
   }
   .ecoindex:hover { background: none; }
-  footer .capitales,
+  footer .marque,
   .ecoindex-nom {
     text-decoration: underline dotted;
     text-decoration-thickness: 2px;
     text-underline-offset: 4px;
   }
   .ecoindex:hover .ecoindex-nom { background: var(--jaune); }
-  /* Ces deux-là sont des marques, pas des mots : en capitales, comme dans le
-     pied de page des autres sites. La casse reste minuscule dans le texte, un
-     lecteur d'écran n'a pas à les épeler. */
-  footer .capitales,
-  footer .ecoindex-nom {
-    text-transform: uppercase;
-    letter-spacing: .04em;
-  }
   .ecoindex-note {
     display: inline-flex;
     align-items: center;
@@ -852,7 +866,7 @@
         <img class="titre-logo" src="img/logo-manufacture.png" alt="Dessin au trait, en perspective isométrique, d'un corps de bâtiment de la Manufacture avec sa cheminée." width="480" height="370">
       </span>
     </div>
-    <p class="expo">Première exposition : Fête du matrimoine, à La Traverse, le 19 septembre 2026.<a class="fb" href="https://www.facebook.com/events/936003922805149" target="_blank" rel="noopener" title="L'événement sur Facebook" aria-label="L'événement sur Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M24 12.07C24 5.44 18.63.07 12 .07S0 5.44 0 12.07c0 5.99 4.39 10.95 10.13 11.86v-8.39H7.08v-3.47h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.47h-2.8v8.39C19.61 23.02 24 18.06 24 12.07z"/></svg></a></p>
+    <p class="expo">Première exposition : Fête du matrimoine, à La Traverse, le 19 septembre 2026.<a class="fb bulle a-droite" href="https://www.facebook.com/events/936003922805149" target="_blank" rel="noopener" data-bulle="Voir l'événement Facebook" aria-label="Voir l'événement Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M24 12.07C24 5.44 18.63.07 12 .07S0 5.44 0 12.07c0 5.99 4.39 10.95 10.13 11.86v-8.39H7.08v-3.47h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.47h-2.8v8.39C19.61 23.02 24 18.06 24 12.07z"/></svg></a></p>
   </div>
 
   <section id="epoque">
@@ -951,7 +965,7 @@
     <h2>Réalisation</h2>
     <div class="credits cadre">
       <ul>
-        <li><a class="contact" href="mailto:auchtitemaquette24@gmail.com" data-adresse="auchtitemaquette24@gmail.com"><strong>Jean-Michel Lorinquer</strong></a> — conception et réalisation</li>
+        <li><a class="bulle contact" href="mailto:auchtitemaquette24@gmail.com" data-bulle="auchtitemaquette24@gmail.com"><strong>Jean-Michel Lorinquer</strong></a> — conception et réalisation</li>
         <li><strong>Aboubacar</strong> — réalisation</li>
         <li><strong>Les jeunes des centres sociaux de Bergerac</strong> — réalisation <em>(à venir en septembre)</em></li>
         <li><strong>Le FabLab de l'Atelier Partagé</strong> — découpe laser, impression 3D</li>
@@ -960,8 +974,8 @@
   </section>
 
   <footer>
-    <p>Atelier Partagé de La Traverse — 2 rue Jean Nicot, 24100 Bergerac.<br>
-    Photographies d'époque : Archives SEITA (1959).<span class="sep">#</span><a href="https://photo-bondier-bergerac.fr/" target="_blank" rel="noopener" title="Association Patrimoine Photographique en Bergeracois">Galerie photos Bondier-Lecat</a><span class="sep">#</span>Photographies maquette + site : <a class="contact" href="mailto:florian@egonux.com" data-adresse="florian@egonux.com">Florian</a>.<span class="sep">#</span><a class="ecoindex" href="https://www.ecoindex.fr/resultat/?id=4a098de6-acc1-4fcd-b2a4-2301a4ce049e" title="EcoIndex : note B" aria-label="EcoIndex : note B, voir le rapport"><span class="ecoindex-nom">ecoindex</span><span class="ecoindex-note">B</span></a><span class="sep">#</span><a class="capitales" href="https://www.egonux.com">ego/nux</a></p>
+    <p>Atelier Partagé de La Traverse<svg class="lieu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>2 rue Jean Nicot, 24100 Bergerac.<br>
+    Photographies d'époque : Archives SEITA (1959). <a class="bulle" href="https://photo-bondier-bergerac.fr/" target="_blank" rel="noopener" data-bulle="Association Patrimoine Photographique en Bergeracois">Galerie photos Bondier-Lecat</a><span class="sep">#</span>Photographies maquette + site : <a class="bulle contact" href="mailto:florian@egonux.com" data-bulle="florian@egonux.com">Florian</a>.<span class="sep">#</span><a class="ecoindex bulle a-droite" href="https://www.ecoindex.fr/resultat/?id=4a098de6-acc1-4fcd-b2a4-2301a4ce049e" data-bulle="ÉcoIndex : note B" aria-label="ÉcoIndex : note B, voir le rapport"><span class="ecoindex-nom">ÉcoIndex</span><span class="ecoindex-note">B</span></a><span class="sep">#</span><a class="marque" href="https://www.egonux.com">Ego/Nux</a></p>
   </footer>
 
 </div>
