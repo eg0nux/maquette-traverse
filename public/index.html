@@ -133,6 +133,25 @@
     object-position: 50% 100%;
   }
 
+  /* Deux corrections d'optique pour le CIDFF, dont le pavé « Dordogne » est un
+     rectangle plein : à hauteur de boîte égale, il pesait plus lourd que le
+     lettrage de La Traverse, tout en jambages et en vide. On lui retire un
+     vingtième de sa taille.
+
+     Et on le remonte de 3 px. Les deux logotypes sont pourtant calés au pixel
+     sur la même ligne : c'est leur encre qui ne l'est pas. Le bord du pavé
+     descend jusqu'au bas de son image, quand les lettres de La Traverse, tracées
+     sur une ligne de pied irrégulière, s'arrêtent pour moitié 5 px plus haut et
+     ne laissent en dessous que quelques fûts. Le pavé se pose donc à mi-chemin
+     entre ces deux lignes, là où l'œil attend le pied du mot.
+
+     La marge est prise sur l'image, pas sur le lien : la boîte du lien garde ses
+     66 px, la rangée et l'esperluette ne bougent pas. */
+  .logos-paire img[src$="logo-cidff.svg"] {
+    height: 63px;
+    margin-bottom: 3px;
+  }
+
   /* Cormorant Garamond, italique, réduite au seul caractère « & » : mille cent
      quatre octets. La police n'est appelée que pour ce signe, jamais pour du
      texte — c'est ce qui rend le sous-ensemble acceptable là où une troisième
