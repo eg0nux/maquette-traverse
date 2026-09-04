@@ -8,7 +8,8 @@ En ligne : <https://maquette.egonux.com>
 ## Structure
 
 - `public/` — le site (HTML statique autonome, aucune dépendance de build)
-- `public/img/` — photographies en deux tailles (1600 px et 800 px)
+- `public/img/` — photographies en deux tailles (1600 px et 800 px), logotypes
+- `public/fonts/` — Cormorant Garamond réduite à l'esperluette de l'en-tête (licence SIL)
 - `notes/` — notes de réalisation fournies par les auteurs de la maquette
 
 ## Publier

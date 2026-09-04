@@ -105,6 +105,123 @@
     100% { transform: rotate(var(--incline, 0deg)) translate(0, 0); filter: none; }
   }
 
+  /* Les deux structures qui portent le FabLab vont ensemble, à droite de
+     l'en-tête : le CIDFF Dordogne, qui anime l'atelier numérique, puis La
+     Traverse, qui l'héberge. Séparées d'une esperluette, pas d'un blanc :
+     l'atelier est une collaboration des deux, pas deux structures qui se
+     trouvent sur la même page. Même rangée que dans la colonne de
+     fablab.egonux.com et de lab.egonux.com. */
+  .logos-paire {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  /* Hauteur commune, largeur libre : c'est la hauteur d'x des deux logotypes
+     qui doit s'accorder, pas leur encombrement. Le pavé du CIDFF est le plus
+     large ; caler la rangée sur la largeur, comme le reste de l'en-tête,
+     l'aurait rendu plus petit que « LA TRAVERSE » qu'il accompagne. */
+  .logos-paire img {
+    width: auto;
+    height: 66px;
+    /* Sur un écran étroit, la rangée se serre : les deux liens rétrécissent
+       proportionnellement à leur largeur, et sans `contain` les logotypes
+       s'écrasaient. Cadrés au pied, ils gardent leurs proportions, restent
+       de même hauteur l'un que l'autre — le rapport entre les deux largeurs ne
+       change pas — et leur ligne de mots reste celle de l'esperluette. */
+    object-fit: contain;
+    object-position: 50% 100%;
+  }
+
+  /* Cormorant Garamond, italique, réduite au seul caractère « & » : mille cent
+     quatre octets. La police n'est appelée que pour ce signe, jamais pour du
+     texte — c'est ce qui rend le sous-ensemble acceptable là où une troisième
+     famille complète ne le serait pas. Licence ouverte SIL, dont le texte
+     accompagne le fichier dans le même dossier.
+
+     Pourquoi elle plutôt que Work Sans, déjà là : l'esperluette de Cormorant
+     est une ligature « Et » de tradition Garamond, la boucle qui remonte et la
+     barre qui traverse. Celle d'une linéale est une ponctuation ; ici le signe
+     doit tenir seul entre deux logotypes. */
+  @font-face {
+    font-family: "Cormorant Garamond";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url("fonts/cormorant-garamond-400-italic-esperluette.woff2") format("woff2");
+    /* Le sous-ensemble ne contient que l'esperluette. Le dire au navigateur lui
+       évite de charger le fichier là où elle ne s'affiche pas. */
+    unicode-range: U+26;
+  }
+
+  /* Aligné bas, pas au milieu : les deux logotypes ont leur masse en bas, le
+     cartouche « Dordogne » d'un côté, le mot « LA TRAVERSE » de l'autre,
+     surmonté d'une arche qui n'est que du vide optique. Centré sur la boîte,
+     le signe flottait au-dessus de cette ligne-là.
+
+     Il ne réagit pas au survol : rien à cliquer, et le soubresaut des logos
+     serait brouillé par un troisième élément qui bouge. */
+  .logos-et {
+    flex: 0 0 auto;
+    align-self: flex-end;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    /* Cormorant est un caractère de titrage : à corps égal, son œil est plus
+       petit et son trait plus fin que ceux de Work Sans. Il lui faut donc un
+       corps plus grand pour peser autant entre les deux logotypes. */
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--noir);
+    user-select: none;
+    /* Cormorant pose son esperluette haut dans la boîte de ligne : calée au
+       pied, son encre tombait au-dessus de la ligne des mots. La marge négative
+       la redescend, en em pour qu'elle suive le corps si on y retouche. */
+    margin-bottom: -0.11em;
+  }
+
+  /* Le logotype du CIDFF est le seul en couleur de l'en-tête ; La Traverse est
+     déjà dessiné en noir. Son turquoise et son orange faisaient une tache
+     isolée, le seul endroit de la page où la couleur ne dit rien : celles de la
+     charte sont ailleurs, réservées aux accents.
+
+     `brightness(0)` aplatit tout sur du noir en gardant la transparence. On
+     cible par le fichier plutôt que par un libellé : le nom de la structure
+     peut changer, le fichier non. */
+  header img[src$="logo-cidff.svg"] {
+    filter: brightness(0);
+  }
+
+  /* Le soubresaut réécrit entièrement le `filter` à chaque étape : sans version
+     noire de l'animation, le logotype retrouverait ses couleurs au survol. */
+  a.logo:hover img[src$="logo-cidff.svg"],
+  a.logo:focus-visible img[src$="logo-cidff.svg"] {
+    animation-name: soubresaut-noir;
+  }
+  @keyframes soubresaut-noir {
+    0%   { transform: rotate(var(--incline, 0deg)) translate(0, 0); filter: brightness(0); }
+    14%  { transform: rotate(var(--incline, 0deg)) translate(-2px, 1px);
+           filter: brightness(0) drop-shadow(2px 0 var(--rouge)) drop-shadow(-2px 0 var(--jaune)); }
+    28%  { transform: rotate(var(--incline, 0deg)) translate(2px, -1px);
+           filter: brightness(0) drop-shadow(-2px 0 var(--rouge)); }
+    42%  { transform: rotate(var(--incline, 0deg)) translate(-1px, -1px);
+           filter: brightness(0) drop-shadow(1px 1px var(--jaune)); }
+    56%  { transform: rotate(var(--incline, 0deg)) translate(1px, 1px); filter: brightness(0); }
+    70%  { transform: rotate(var(--incline, 0deg)) translate(-1px, 0);
+           filter: brightness(0) drop-shadow(2px 0 var(--rouge)); }
+    84%  { transform: rotate(var(--incline, 0deg)) translate(1px, -1px); filter: brightness(0); }
+    100% { transform: rotate(var(--incline, 0deg)) translate(0, 0); filter: brightness(0); }
+  }
+
+  /* Sous 30 rem, la rangée ne tient plus : la paire passe sous le logotype de
+     l'Atelier Partagé. Celui-ci n'a alors plus de voisin à sa droite, et le
+     débord de 34 px qui le faisait mordre sur le cartouche du titre venait
+     cette fois recouvrir le CIDFF. On le rend à sa ligne, et on écarte les
+     deux rangées. */
+  @media (max-width: 30rem) {
+    header { row-gap: 1.5rem; }
+    a.logo-ap-lien { margin-bottom: 0; }
+  }
+
   .titre {
     position: relative;
     z-index: 1;
@@ -670,9 +787,21 @@
     <a class="logo logo-ap-lien" href="https://ap.latraverse-bergerac.fr/">
       <img class="logo-ap" src="img/logo-atelier-partage.png" alt="L'Atelier Partagé — La Traverse, Bergerac" width="140">
     </a>
-    <a class="logo" href="https://www.latraverse-bergerac.fr">
-      <img src="img/logo-traverse.png" alt="La Traverse" width="104">
-    </a>
+    <div class="logos-paire">
+      <a class="logo" href="https://www.cidff24.fr">
+        <img src="img/logo-cidff.svg" alt="CIDFF Dordogne" width="129" height="66">
+      </a>
+      <!-- L'esperluette de Cormorant Garamond en italique : une ligature « Et »
+           de tradition Garamond, pas une ponctuation. Elle dit que l'atelier
+           est ce que les deux structures font ensemble.
+
+           Décorative : les deux liens portent déjà leur nom, et un lecteur
+           d'écran n'a pas à annoncer « et commercial ». -->
+      <span class="logos-et" aria-hidden="true">&amp;</span>
+      <a class="logo" href="https://www.latraverse-bergerac.fr">
+        <img src="img/logo-traverse.png" alt="La Traverse" width="103" height="66">
+      </a>
+    </div>
   </header>
 
   <div class="titre cadre cadre-ombre">
