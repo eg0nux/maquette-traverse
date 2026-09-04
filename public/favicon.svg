@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mégot de cigarette">
+<style>
+  svg { --encre: #212121; --papier: #f6ece0; }
+  @media (prefers-color-scheme: dark) { svg { --encre: #f6ece0; --papier: #212121; } }
+</style>
+<g transform="rotate(-35 32 32)">
+  <rect x="24" y="5" width="16" height="54" rx="5" fill="var(--papier)"/>
+  <path d="M24 10a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v3H24z" fill="#f44336"/>
+  <path d="M24 39h16v15a5 5 0 0 1-5 5h-6a5 5 0 0 1-5-5z" fill="#edd1b0"/>
+  <path d="M24 13h16M24 39h16" stroke="var(--encre)" stroke-width="3"/>
+  <path d="M28 44v11M32 44v15M36 44v11" stroke="var(--encre)" stroke-width="1.6" opacity=".55"/>
+  <rect x="24" y="5" width="16" height="54" rx="5" fill="none"
+        stroke="var(--encre)" stroke-width="3" stroke-linejoin="round"/>
+</g>
+</svg>
