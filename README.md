@@ -11,6 +11,9 @@ En ligne : <https://maquette.egonux.com>
 - `public/img/` — photographies en deux tailles (1600 px et 800 px), logotypes
 - `public/fonts/` — Cormorant Garamond réduite à l'esperluette de l'en-tête (licence SIL)
 - `notes/` — notes de réalisation fournies par les auteurs de la maquette
+- `tools/photos.py` — refabrique les photos publiées depuis les originaux
+  (redressement, recadrage, traitement, deux tailles) ; les cadrages y sont
+  notés en fractions, pour être repris sans rouvrir un éditeur d'images
 
 ## Publier
 

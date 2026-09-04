@@ -692,6 +692,18 @@
     font-weight: 600;
     max-width: 100%;
   }
+  /* Le « f » de Facebook redessiné en SVG inline : un logo de 300 octets qui
+     suit la couleur d'encre, plutôt qu'une image et une requête de plus. */
+  .expo .fb {
+    display: inline-flex;
+    vertical-align: -.2em;
+    margin-left: .55rem;
+    line-height: 0;
+  }
+  .expo .fb:hover { background: none; }
+  .expo .fb svg { width: 1.2em; height: 1.2em; fill: var(--noir); transition: fill .12s ease; }
+  .expo .fb:hover svg,
+  .expo .fb:focus-visible svg { fill: var(--rouge); }
   a { color: var(--noir); text-decoration-thickness: 2px; text-underline-offset: 3px; }
   a:hover { background: var(--jaune); }
 
@@ -796,6 +808,7 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .galerie button { transition: none; }
+    .expo .fb svg { transition: none; }
   }
 </style>
 </head>
@@ -839,7 +852,7 @@
         <img class="titre-logo" src="img/logo-manufacture.png" alt="Dessin au trait, en perspective isométrique, d'un corps de bâtiment de la Manufacture avec sa cheminée." width="480" height="370">
       </span>
     </div>
-    <p class="expo">Première exposition : Fête du matrimoine, à La Traverse, le 19 septembre 2026.</p>
+    <p class="expo">Première exposition : Fête du matrimoine, à La Traverse, le 19 septembre 2026.<a class="fb" href="https://www.facebook.com/events/936003922805149" target="_blank" rel="noopener" title="L'événement sur Facebook" aria-label="L'événement sur Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M24 12.07C24 5.44 18.63.07 12 .07S0 5.44 0 12.07c0 5.99 4.39 10.95 10.13 11.86v-8.39H7.08v-3.47h3.05V9.43c0-3.01 1.79-4.67 4.53-4.67 1.31 0 2.69.24 2.69.24v2.95h-1.51c-1.49 0-1.96.93-1.96 1.87v2.25h3.33l-.53 3.47h-2.8v8.39C19.61 23.02 24 18.06 24 12.07z"/></svg></a></p>
   </div>
 
   <section id="epoque">
@@ -870,8 +883,8 @@
   </section>
 
   <figure class="hero cadre cadre-ombre">
-    <img src="img/maquette-hero.jpg" alt="Vue frontale de la maquette achevée : la halle vitrée au premier plan, la cour en U et les trois corps de bâtiment aux toitures bordeaux." width="2000">
-    <figcaption>La maquette assemblée : au premier plan la halle aux verrières, au fond la cour bordée par les trois corps de bâtiment.</figcaption>
+    <img src="img/maquette-hero.jpg" alt="Vue plongeante sur la cour : les longues toitures bordeaux de deux corps de bâtiment encadrent une pelouse plantée d'arbres, et le pavillon de direction coiffé de ses cheminées de brique." width="2000">
+    <figcaption>La cour intérieure : les deux ailes encadrent le jardin planté et le pavillon de direction.</figcaption>
   </figure>
 
   <ul class="fiche">
@@ -885,7 +898,7 @@
   <section id="sujet">
     <h2>Le sujet</h2>
     <div class="texte-cadre cadre">
-      <p>La maquette restitue <strong>l'ensemble du site industriel</strong> : les longs corps de bâtiment aux façades crème percées de fenêtres en plein cintre, les toitures de tuiles bordeaux, la cour centrale, le château d'eau, le pavillon de direction et sa haie, et la vaste halle couverte de verrières qui ferme le site au sud.</p>
+      <p>La maquette restitue <strong>l'ensemble du site industriel</strong> : les longs corps de bâtiment aux façades crème percées de fenêtres en plein cintre, les toitures de tuiles bordeaux, la cour centrale, le château d'eau, le pavillon de direction et son jardin planté, et la vaste halle couverte de verrières qui ferme le site au sud.</p>
       <p><strong>La vie du site y est figurée</strong> : une camionnette jaune dans la cour et le locotracteur gris <a href="https://fr.wikipedia.org/wiki/Locotracteurs_Gaston_Moyse" target="_blank" rel="noopener">Gaston Moyse</a> avec ses deux wagons ouverts en bois de type <a href="https://fr.wikipedia.org/wiki/Decauville" target="_blank" rel="noopener">Decauville</a>, destinés à l'exportation du tabac par l'embranchement particulier de la SNCF. Un camion benne partait pour sa part de l'entrepôt des produits finis.</p>
     </div>
   </section>
@@ -948,7 +961,7 @@
 
   <footer>
     <p>Atelier Partagé de La Traverse — 2 rue Jean Nicot, 24100 Bergerac.<br>
-    Photographies d'époque : Archives SEITA (1959).<span class="sep">#</span>Photographies maquette + site : <a class="contact" href="mailto:florian@egonux.com" data-adresse="florian@egonux.com">Florian</a>.<span class="sep">#</span><a class="ecoindex" href="https://www.ecoindex.fr/resultat/?id=4a098de6-acc1-4fcd-b2a4-2301a4ce049e" title="EcoIndex : note B" aria-label="EcoIndex : note B, voir le rapport"><span class="ecoindex-nom">ecoindex</span><span class="ecoindex-note">B</span></a><span class="sep">#</span><a class="capitales" href="https://www.egonux.com">ego/nux</a></p>
+    Photographies d'époque : Archives SEITA (1959).<span class="sep">#</span><a href="https://photo-bondier-bergerac.fr/" target="_blank" rel="noopener" title="Association Patrimoine Photographique en Bergeracois">Galerie photos Bondier-Lecat</a><span class="sep">#</span>Photographies maquette + site : <a class="contact" href="mailto:florian@egonux.com" data-adresse="florian@egonux.com">Florian</a>.<span class="sep">#</span><a class="ecoindex" href="https://www.ecoindex.fr/resultat/?id=4a098de6-acc1-4fcd-b2a4-2301a4ce049e" title="EcoIndex : note B" aria-label="EcoIndex : note B, voir le rapport"><span class="ecoindex-nom">ecoindex</span><span class="ecoindex-note">B</span></a><span class="sep">#</span><a class="capitales" href="https://www.egonux.com">ego/nux</a></p>
   </footer>
 
 </div>
@@ -971,22 +984,22 @@
 
   var groupes = [
     { section: "ensemble", images: [
-      { f: "IMG_20260821_172857", t: "La cour vue depuis la halle, le locotracteur au centre." },
-      { f: "IMG_20260821_172444", t: "Vue zénithale de l'ensemble du site." },
-      { f: "IMG_20260821_172432", t: "Le site vu depuis la grille de clôture." },
-      { f: "IMG_20260821_172359", t: "La cour intérieure et le pavillon de direction." },
-      { f: "IMG_20260821_171952", t: "Vue de dessus : les deux ailes et la halle vitrée." },
+      { f: "IMG_20260903_165418", t: "L'ensemble du site : les deux ailes, la cour plantée et le pavillon de direction." },
+      { f: "IMG_20260903_165240", t: "Vue zénithale : la cour, la halle et l'embranchement ferré en cours d'aménagement." },
+      { f: "IMG_20260903_165308", t: "La cour et son préau, le pavillon de direction au fond." },
+      { f: "IMG_20260903_165627", t: "La façade de la halle et sa clôture, depuis l'embranchement ferré." },
+      { f: "IMG_20260903_165253", t: "Le site vu de face : les trois corps de bâtiment, la halle et les quais." },
       { f: "IMG_20260818_140849", t: "État du montage en août, toitures encore d'un rouge vif." },
       { f: "IMG_20260818_140840", t: "Les corps de bâtiment en cours d'assemblage." }
     ]},
     { section: "details", images: [
-      { f: "IMG_20260821_172250", t: "Le pavillon de direction : volets, chaînages d'angle, lucarnes en toiture." },
-      { f: "IMG_20260821_172155", t: "Le pavillon et sa haie, encadrés par les ateliers." },
-      { f: "IMG_20260821_172303", t: "Le château d'eau, imprimé en 3D, et la haie." },
-      { f: "IMG_20260821_172217", t: "La cour : château d'eau, haie et pavillon." },
-      { f: "IMG_20260821_172105", t: "Le locotracteur, encore en vert avant sa mise en teinte grise, et la camionnette jaune dans la cour." },
-      { f: "IMG_20260821_172039", t: "La halle et ses verrières, le long du quai." },
-      { f: "IMG_20260821_171940", t: "Vue zénithale : la halle vitrée ferme le site." }
+      { f: "IMG_20260903_165328", t: "La cour plantée, le pavillon de direction et le château d'eau." },
+      { f: "IMG_20260903_165430", t: "Le jardin : pelouse, arbres et château d'eau au pied de l'aile." },
+      { f: "IMG_20260903_165517", t: "À la verticale du jardin, entre les toitures des deux ailes." },
+      { f: "IMG_20260903_165544", t: "Le préau de tôle, la camionnette jaune et le camion benne chargé." },
+      { f: "IMG_20260903_165408", t: "Un wagon de bois chargé de caisses, entre le pavillon et l'aile." },
+      { f: "IMG_20260903_165347", t: "Le pignon d'une aile : quatre niveaux de fenêtres en plein cintre et chaînages d'angle." },
+      { f: "IMG_20260903_165354", t: "La clôture blanche et l'allée de gravier, le long du pignon." }
     ]},
     { section: "atelier", images: [
       { f: "IMG_20260821_171854", t: "Le châssis en MDF nu, avant tout montage." },
